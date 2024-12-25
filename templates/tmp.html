@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <script>
+        var ws;
+
+        function init() {
+            ws = new WebSocket("ws://localhost:8080/ws");
+
+            ws.onmessage = function(event) {
+                var messages = document.getElementById("messages");
+                var message = document.createElement("div");
+                message.textContent = event.data;
+                messages.appendChild(message);
+            };
+        }
+
+        function sendMessage() {
+            var input = document.getElementById("messageInput");
+            ws.send(input.value);
+            input.value = '';
+        }
+
+        window.onload = init;
+    </script>
+</head>
+<body>
+    <h1>A+B problem</h1>
+    <div id="messages" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll;"></div>
+    <textarea id="messageInput" rows="10" cols="30" placeholder="Введите код...">
+        func ab(a int, b int) int {
+            
+        }</textarea>
+    <button onclick="sendMessage()">Send</button>
+</body>
+</html>
